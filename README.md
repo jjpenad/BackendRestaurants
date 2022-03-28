@@ -3,7 +3,9 @@
 This project consist of a simple REST service build with python framework FLASK that includes singup and login endpoint to create an user and then login which will return a JWT token.
 With help of this token, you will be able to interact with different endpoint that allow you to create Restaurants into the database.
 
-## Cloud Service
+## Cloud Hosted
+
+This application is not yet deployed to the cloud.
 
 ## Models
 
@@ -17,7 +19,7 @@ This application consists of two simple models of data and its attributes:
 - **Password:** String. Required for signing up.
   > **Note:** Passwords must be at least **10 characters**, contain **one lowercase letter**, **one uppercase letter** and have at least one of: **"!", "@", "#", "?", "]"**.
 
-## Restaurant
+### Restaurant
 
 - **Name:** String. Is Unique
 - **Description:** String.
@@ -81,3 +83,23 @@ python run.py
 
 Make sure your localhost and port 5000 are free, otherwise the app will not execute.
 Open your browser on [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+
+## Postman Tests
+
+In this repo you will find a folder "postman" with two files:
+
+Environment:
+
+```
+57BlocksEnv.postman_environment.json
+```
+
+Tests:
+
+```
+57BlocksEnv.postman_collection.json
+```
+
+Upload this files for environment and tests setup to postman. For the tests, we recommend running each collection individually as a whole.
+
+You need to change Env variables "happyPathEmail" and "happyPathPassword" each time you run the "HappyCompletePath" collection because this one starts by creating the user, and 2 users can not have the same email.
