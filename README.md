@@ -34,6 +34,13 @@ Once you clone this repo, you need to do the following to make it work:
 ### 1. Virtual Environment
 
 We recommend creating a virtual environment to manage your dependencies in a better way. In the root folder of the project execute:
+
+If you don't have virtualenv:
+
+```
+pip install virtualenv
+```
+
 Create venv:
 
 ```

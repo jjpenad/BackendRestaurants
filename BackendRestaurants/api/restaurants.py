@@ -1,6 +1,3 @@
-from ast import Pass
-import json
-from turtle import update
 from flask import Blueprint, jsonify, request
 from BackendRestaurants.api.auth import token_required, token_verication
 from BackendRestaurants.utils import handleResponse

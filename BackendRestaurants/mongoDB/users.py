@@ -1,8 +1,6 @@
 from BackendRestaurants.mongoDB import DB, COLLECTION_USERS
 from BackendRestaurants.utils import isValidEmail
 
-
-
 def register_user(email:str, password:str):
     '''
     This function directly creates the user with the given password to Mongo.

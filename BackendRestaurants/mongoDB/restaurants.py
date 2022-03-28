@@ -1,4 +1,3 @@
-
 from BackendRestaurants.mongoDB import DB, COLLECTION_RESTAURANTS
 
 def get_all_public_restaurants():
