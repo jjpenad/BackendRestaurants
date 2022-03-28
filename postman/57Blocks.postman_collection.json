@@ -1,0 +1,886 @@
+{
+	"info": {
+		"_postman_id": "e0da6385-64f3-4668-a463-1596efea2c01",
+		"name": "57Blocks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HappyCompletePath",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"{{happyPathEmail}}\",\r\n    \"password\":\"{{happyPathPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/signup",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Login succesfull\"]= responseCode.code === 200;\r",
+									"\r",
+									"pm.test(\"Set token for the next tests\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"     \r",
+									"     pm.globals.set(\"happyPathToken\", response.token);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"{{happyPathEmail}}\",\r\n    \"password\":\"{{happyPathPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Restaurant creation successful\"]= responseCode.code === 200;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Prueba Restaurante\",\r\n    \"description\":\"Prueba de nuevo restaurante\",\r\n    \"visibility\":\"private\",\r\n    \"address\":\"wefwef\",\r\n    \"city\":\"Bogota\",\r\n    \"score\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all restaurants(Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						},
+						"description": "When token is provided, the list of restaurants will contain all public restaurants plus the restaurants of the given user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Prueba Restaurante\",\r\n    \"description\":\"Prueba actualizacion\",\r\n    \"visibility\":\"public\",\r\n    \"address\":\"wefwef\",\r\n    \"city\":\"Cali\",\r\n    \"score\":7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restaurant Wrong Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;\r",
+									"\r",
+									"pm.test(\"Restaurant not updated because it does not exist or it does not belong to the user\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.error).to.eql(\"Could not update the restaurant\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Users can only update restaurants created by them\",\r\n    \"description\":\"Prueba actualizacion\",\r\n    \"visibility\":\"public\",\r\n    \"address\":\"wefwef\",\r\n    \"city\":\"Cali\",\r\n    \"score\":7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restaurant (No Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request token is needed to delete\"]= responseCode.code === 401;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imp1YW5wZC4yNkBnbWFpbC5jb20iLCJleHAiOjE2NDg0MzI1MzN9.6daoMKPS1TMb3yk1j2RBehiIVHCmyYC2XIM9eQvJRWs",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Prueba Restaurante\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;\r",
+									"\r",
+									"pm.test(\"Restaurant succesfully deleted\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.message).to.eql(\"Restaurant succesfully deleted\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Prueba Restaurante\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete previously deleted restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;\r",
+									"\r",
+									"pm.test(\"No deleted restaurant because is not existing\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.error).to.eql(\"Could not delete the restaurant\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{happyPathToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Prueba Restaurante\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public Queries",
+			"item": [
+				{
+					"name": "Get restaurants(No token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants?pageNumber=0&pageLimit=2",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "0"
+								},
+								{
+									"key": "pageLimit",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Because no token is provided, this endpoint will give back only the public restaurants from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get restaurant by name(No token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 404;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants?name=fwefub",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "fwefub"
+								}
+							]
+						},
+						"description": "Because no token is provided, this endpoint will give back only the public restaurants from the database"
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains test for all type of requests that do not require authentication token, so the can be individually executed."
+		},
+		{
+			"name": "Errors and validations",
+			"item": [
+				{
+					"name": "Signup Existing Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Request Successful\"]= responseCode.code === 200;\r",
+									"\r",
+									"pm.test(\"Message correct\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.message).to.eql(\"User already exists. Please log in\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"existingUser@gmail.com\",\r\n    \"password\":\"passwordTest@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/signup",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup Invalid Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Bad request for invalid email\"]= responseCode.code === 400;\r",
+									"\r",
+									"pm.test(\"Error message correct\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.error).to.eql(\"Invalid Email\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"testUsergmail.com\",\r\n    \"password\":\"passwordTest@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/signup",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						},
+						"description": "In this case, email is invalid because is missing @\n\nEvery valid email follows this regular expression:\n\n\\[A-Za-z0-9._%+-\\]+@\\[A-Za-z0-9.-\\]+\\\\.\\[A-Z|a-z\\]{2,}"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup Invalid Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Bad request for invalid password\"]= responseCode.code === 400;\r",
+									"\r",
+									"pm.test(\"Error message correct\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.error).to.eql(\"Password must have at least one of these characters: !, @, #, ?, ]\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"testUser@gmail.com\",\r\n    \"password\":\"passwordTest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/signup",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Missing Information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Bad request for missing email or password\"]= responseCode.code === 404;\r",
+									"\r",
+									"pm.test(\"Error message correct\", function () {\r",
+									"     const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.error).to.eql(\"Missing information\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"keyNotEmail\":\"cbiw@eubvwe.com\",\r\n    \"password\":\"passwordTest@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Invalid Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"BAD REQUEST for invalid email\"]= responseCode.code === 400;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"testUsergmail.com\",\r\n    \"password\":\"passwordTest@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "In this case, email is invalid because is missing @\n\nEvery valid email follows this regular expression:\n\n\\[A-Za-z0-9._%+-\\]+@\\[A-Za-z0-9.-\\]+\\\\.\\[A-Z|a-z\\]{2,}"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Invalid Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"BAD REQUEST for invalid login password\"]= responseCode.code === 400;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"testUser@gmail.com\",\r\n    \"password\":\"passwordTest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Wrong Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"bAD REQUEST for invalid login password\"]= responseCode.code === 403;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"existingUser@gmail.com\",\r\n    \"password\":\"passwordTest@3423\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/auth/login",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get restaurant by not existing name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Not existing restaurant with the given name\"]= responseCode.code === 404;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{domain}}/api/v1/restaurants?name=qwiduqwbifweifeuiwbnpnpe",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "qwiduqwbifweifeuiwbnpnpe"
+								}
+							]
+						},
+						"description": "Because no token is provided, this endpoint will give back only the public restaurants from the database"
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains test for all type of errors and \"bad requests\" that reflect business logic.\n\nThese tests do not require authentication token, so the can be individually executed."
+		}
+	]
+}
