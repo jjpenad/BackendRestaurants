@@ -73,6 +73,8 @@ SECRET_KEY=<your_secret_key>
 
 Here, replace **\<username\>** and **\<password\>** tags with the information of your mongo connection string. Also change **\<database\>** with the name of you database and finally set a secret key in **\<your_secret_key\>** for encryption of the tokens.
 
+In your database, you must have 2 collecttions created: Users and Restaurants.
+
 ### 3. Execution:
 
 In the root directory, in the terminal execute:
